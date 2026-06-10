@@ -1,4 +1,5 @@
 import com.data.SongTitle;
+import com.service.SearchFormatter;
 import com.service.SearchService;
 import java.util.List;
 import java.util.Scanner;
@@ -30,6 +31,8 @@ public class App {
             if (results.isEmpty()) {
                 System.out.println("Tidak ada lagu dengan prefix \"" + input + "\".");
             } else {
+                SearchFormatter.urutkanLagu(results);
+                SearchFormatter.tampilkanTotal(results, input);
                 System.out.println("Hasil pencarian untuk \"" + input + "\":");
                 for (int i = 0; i < results.size(); i++) {
                     System.out.println("  " + (i + 1) + ". " + results.get(i));
