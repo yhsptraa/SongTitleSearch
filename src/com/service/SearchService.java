@@ -3,15 +3,17 @@ package com.service;
 import com.algoritm.DFS;
 import com.model.TrieNode;
 import com.trie.Trie;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchService {
-    private Trie trie;
-    private DFS dfs;
+
+    private final Trie trie;
+    private final DFS dfs;
 
     public SearchService() {
-        this.trie = new Trie();
-        this.dfs = new DFS();
+        trie = new Trie();
+        dfs = new DFS();
     }
 
     public void addSong(String title) {
@@ -19,7 +21,21 @@ public class SearchService {
     }
 
     public List<String> search(String prefix) {
-        TrieNode prefixNode = trie.searchPrefix(prefix);
-        return dfs.collect(prefixNode);
+
+        if (prefix == null || prefix.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        TrieNode node = trie.searchPrefix(prefix);
+
+        if (node == null) {
+            return Collections.emptyList();
+        }
+
+        List<String> results = dfs.collect(node);
+
+        Collections.sort(results);
+
+        return results;
     }
 }
